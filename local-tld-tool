@@ -1,0 +1,51 @@
+#!/usr/bin/env node
+
+var fs = require('fs')
+
+var configFilePath = process.env.HOME + '/.local-tld.json'
+
+if (!fs.existsSync(configFilePath)) fs.writeFileSync(configFilePath, '{}\n')
+
+var config = JSON.parse(fs.readFileSync(configFilePath, 'utf8'))
+
+var domain = process.argv[2]
+  , port   = process.argv[3]
+
+if (!domain) {
+  console.log('Usage: local-tld domain [port-to-set or --unset]')
+  console.log('Current config:', config)
+  process.exit()
+}
+
+if (domain && !port) {
+  var port = portForDomainName(domain)
+  if (port) {
+    console.log(port)
+    process.exit()
+  } else process.exit(1)
+}
+
+if (domain && port) {
+  if ('--unset' === port) removeConfEntry(domain)
+  else config[port] = { name: domain }
+  fs.writeFileSync(configFilePath, JSON.stringify(config))
+}
+
+// ---
+
+function portForDomainName(domainName) {
+  for (var port in config) {
+    var domainConfig = config[port]
+    if (domainConfig.name === domainName) return port
+  }
+}
+
+function removeConfEntry(domainName) {
+  for (var port in config) {
+    var domainConfig = config[port]
+    if (domainConfig.name === domainName) {
+      delete config[port]
+      return
+    }
+  }
+}

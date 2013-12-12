@@ -1,0 +1,21 @@
+{
+  "name": "local-tld-tool",
+  "version": "0.0.0",
+  "description": "CLI tool to configure local-tld",
+  "bin": {
+    "local-tld": "local-tld-tool"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quackingduck/local-tld-tool"
+  },
+  "bugs": {
+    "url": "https://github.com/quackingduck/packagify/issues"
+  },
+  "keywords": [ "local-tld" ],
+  "author": {
+    "name": "Myles Byrne",
+    "email": "myles@myles.id.au"
+  },
+  "license": "MIT"
+}
