@@ -4,6 +4,7 @@ Command line utilitly to set & get [local-tld] config values:
     $ local-tld bar         # show port for domain
     2001
     $ local-tld baz --unset # unset port for domain
+    $ local-tld qux 2002 a b c # also alias a.qux.dev, b.qux.dev etc
 
 [local-tld]: https://github.com/hoodiehq/local-tld
 
