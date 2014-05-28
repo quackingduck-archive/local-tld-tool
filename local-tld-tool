@@ -4,19 +4,25 @@ var fs = require('fs')
 
 var configFilePath = process.env.HOME + '/.local-tld.json'
 
+// ensure a blank config file exists
 if (!fs.existsSync(configFilePath)) fs.writeFileSync(configFilePath, '{}\n')
 
+// load the current config
 var config = JSON.parse(fs.readFileSync(configFilePath, 'utf8'))
 
-var domain = process.argv[2]
-  , port   = process.argv[3]
+// extract args
+var domain  = process.argv[2]
+  , port    = process.argv[3]
+  , aliases = process.argv.slice(3)
 
+// show usage if no args
 if (!domain) {
-  console.log('Usage: local-tld domain [port-to-set or --unset]')
+  console.log('Usage: local-tld domain [port-to-set or --unset] [aliased subdomains]')
   console.log('Current config:', config)
   process.exit()
 }
 
+// print port if just domain given
 if (domain && !port) {
   var port = portForDomainName(domain)
   if (port) {
@@ -25,9 +31,10 @@ if (domain && !port) {
   } else process.exit(1)
 }
 
+// handle domain + (port | --unset) + optional aliases
 if (domain && port) {
   if ('--unset' === port) removeConfEntry(domain)
-  else config[port] = { name: domain }
+  else config[port] = { name: domain, aliases: aliases }
   fs.writeFileSync(configFilePath, JSON.stringify(config))
 }
 
