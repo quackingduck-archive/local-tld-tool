@@ -1,6 +1,6 @@
 {
   "name": "local-tld-tool",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "CLI tool to configure local-tld",
   "bin": {
     "local-tld": "local-tld-tool"
