@@ -13,7 +13,7 @@ var config = JSON.parse(fs.readFileSync(configFilePath, 'utf8'))
 // extract args
 var domain  = process.argv[2]
   , port    = process.argv[3]
-  , aliases = process.argv.slice(3)
+  , aliases = process.argv.slice(4)
 
 // show usage if no args
 if (!domain) {
